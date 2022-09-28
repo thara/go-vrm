@@ -27,3 +27,11 @@ func GetVRMExtension(doc *gltf.Document) (*VRMExtension, bool) {
 	v, ok := ext.(*VRMExtension)
 	return v, ok
 }
+
+func AddVRMExtension(doc *gltf.Document, vrm *VRMExtension) {
+	doc.ExtensionsUsed = append(doc.ExtensionsUsed, extensionName)
+	if doc.Extensions == nil {
+		doc.Extensions = gltf.Extensions{}
+	}
+	doc.Extensions[extensionName] = vrm
+}
