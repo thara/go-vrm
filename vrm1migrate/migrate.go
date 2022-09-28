@@ -16,6 +16,13 @@ func Migrate(doc *gltf.Document) error {
 		return errors.New("not found VRM 0.0 extension in gltf.Document")
 	}
 
+	meshToNode := make(map[uint32]int)
+	for i, n := range doc.Nodes {
+		if n.Mesh != nil {
+			meshToNode[*n.Mesh] = i
+		}
+	}
+
 	ext1 := vrm1.VRMExtension{
 		SpecVersion: "1.0",
 	}
@@ -33,7 +40,9 @@ func Migrate(doc *gltf.Document) error {
 		return fmt.Errorf("failed to migrate humanoid: %w", err)
 	}
 
-	//TODO blendshape
+	if ext0.BlendShapeMaster != nil {
+		ext1.Expressions = migrateExpression(doc, ext0, meshToNode)
+	}
 
 	//TODO springBone & collider (optional)
 
