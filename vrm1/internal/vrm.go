@@ -2,9 +2,11 @@
 
 package internal
 
-import "fmt"
-import "reflect"
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"reflect"
+)
 
 // UnmarshalJSON implements json.Unmarshaler.
 func (j *VRMCVrmHumanoidHumanBonesHumanBoneSchemaJson) UnmarshalJSON(b []byte) error {
@@ -341,13 +343,13 @@ func (j *VRMCVrmExpressionsExpressionTextureTransformBindSchemaJson) UnmarshalJS
 		return err
 	}
 	if v, ok := raw["offset"]; !ok || v == nil {
-		plain.Offset = []interface{}{
+		plain.Offset = []float64{
 			0,
 			0,
 		}
 	}
 	if v, ok := raw["scale"]; !ok || v == nil {
-		plain.Scale = []interface{}{
+		plain.Scale = []float64{
 			1,
 			1,
 		}
