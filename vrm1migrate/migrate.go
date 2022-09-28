@@ -10,6 +10,7 @@ import (
 )
 
 func Migrate(doc *gltf.Document) error {
+	// porting https://github.com/vrm-c/UniVRM/blob/8864846a7f13ffcd6f516a7cdd304b50bf30d71a/Assets/VRM10/Runtime/Migration/MigrationVrm.cs#L71
 	ext0, ok := vrm0.GetVRMExtension(doc)
 	if !ok {
 		return errors.New("not found VRM 0.0 extension in gltf.Document")
@@ -27,7 +28,10 @@ func Migrate(doc *gltf.Document) error {
 		return fmt.Errorf("failed to migrate meta: %w", err)
 	}
 
-	//TODO humanoid
+	ext1.Humanoid, err = migrateHumanoid(ext0)
+	if err != nil {
+		return fmt.Errorf("failed to migrate humanoid: %w", err)
+	}
 
 	//TODO blendshape
 
