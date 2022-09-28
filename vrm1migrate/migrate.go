@@ -1,4 +1,4 @@
-package vrmmigrate
+package vrm1migrate
 
 import (
 	"errors"
@@ -6,23 +6,23 @@ import (
 
 	"github.com/qmuntal/gltf"
 	"github.com/thara/go-vrm-migrate/vrm0"
-	"github.com/thara/go-vrm-migrate/vrm1x"
+	"github.com/thara/go-vrm-migrate/vrm1"
 )
 
 func Migrate(doc *gltf.Document) error {
-	vrm0, ok := vrm0.GetVRMExtension(doc)
+	ext0, ok := vrm0.GetVRMExtension(doc)
 	if !ok {
 		return errors.New("not found VRM 0.0 extension in gltf.Document")
 	}
 
-	vrm1 := vrm1x.VRMExtension{
+	ext1 := vrm1.VRMExtension{
 		SpecVersion: "1.0",
 	}
-	vrm1x.AddVRMExtension(doc, &vrm1)
+	vrm1.AddVRMExtension(doc, &ext1)
 
 	var err error
 
-	vrm1.Meta, err = migrateMeta(doc, vrm0.Meta)
+	ext1.Meta, err = migrateMeta(doc, ext0.Meta)
 	if err != nil {
 		return fmt.Errorf("failed to migrate meta: %w", err)
 	}

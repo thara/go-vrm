@@ -1,6 +1,6 @@
-package vrm1x
+package vrm1
 
-import "github.com/thara/go-vrm-migrate/vrm1x/internal"
+import "github.com/thara/go-vrm-migrate/vrm1/internal"
 
 type Meta = internal.VRMCVrmMetaSchemaJson
 

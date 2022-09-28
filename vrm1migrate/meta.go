@@ -1,20 +1,20 @@
-package vrmmigrate
+package vrm1migrate
 
 import (
 	"fmt"
 
 	"github.com/qmuntal/gltf"
 	"github.com/thara/go-vrm-migrate/vrm0"
-	"github.com/thara/go-vrm-migrate/vrm1x"
+	"github.com/thara/go-vrm-migrate/vrm1"
 )
 
-func migrateMeta(doc *gltf.Document, meta0 *vrm0.Meta) (vrm1x.Meta, error) {
-	meta := vrm1x.Meta{
+func migrateMeta(doc *gltf.Document, meta0 *vrm0.Meta) (vrm1.Meta, error) {
+	meta := vrm1.Meta{
 		LicenseUrl:       "https://vrm.dev/licenses/1.0/",
-		AvatarPermission: vrm1x.MetaAvatarPermissionOnlyAuthor,
-		CommercialUsage:  vrm1x.MetaCommercialUsagePersonalNonProfit,
-		CreditNotation:   vrm1x.MetaCreditNotationRequired,
-		Modification:     vrm1x.MetaModificationProhibited,
+		AvatarPermission: vrm1.MetaAvatarPermissionOnlyAuthor,
+		CommercialUsage:  vrm1.MetaCommercialUsagePersonalNonProfit,
+		CreditNotation:   vrm1.MetaCreditNotationRequired,
+		Modification:     vrm1.MetaModificationProhibited,
 	}
 
 	if meta0.Title != nil {
@@ -40,11 +40,11 @@ func migrateMeta(doc *gltf.Document, meta0 *vrm0.Meta) (vrm1x.Meta, error) {
 	if meta0.AllowedUserName != nil {
 		switch *meta0.AllowedUserName {
 		case vrm0.MetaAllowedUserNameOnlyAuthor:
-			meta.AvatarPermission = vrm1x.MetaAvatarPermissionOnlyAuthor
+			meta.AvatarPermission = vrm1.MetaAvatarPermissionOnlyAuthor
 		case vrm0.MetaAllowedUserNameExplicitlyLicensedPerson:
-			meta.AvatarPermission = vrm1x.MetaAvatarPermissionOnlySeparatelyLicensedPerson
+			meta.AvatarPermission = vrm1.MetaAvatarPermissionOnlySeparatelyLicensedPerson
 		case vrm0.MetaAllowedUserNameEveryone:
-			meta.AvatarPermission = vrm1x.MetaAvatarPermissionEveryone
+			meta.AvatarPermission = vrm1.MetaAvatarPermissionEveryone
 		default:
 			return meta, fmt.Errorf("can not migrate allowedUserName(%s) from vrm 0.x", *meta0.AllowedUserName)
 		}
@@ -72,9 +72,9 @@ func migrateMeta(doc *gltf.Document, meta0 *vrm0.Meta) (vrm1x.Meta, error) {
 	if meta0.CommercialUssageName != nil {
 		switch *meta0.CommercialUssageName {
 		case vrm0.MetaCommercialUssageNameAllow:
-			meta.CommercialUsage = vrm1x.MetaCommercialUsagePersonalProfit
+			meta.CommercialUsage = vrm1.MetaCommercialUsagePersonalProfit
 		case vrm0.MetaCommercialUssageNameDisallow:
-			meta.CommercialUsage = vrm1x.MetaCommercialUsagePersonalNonProfit
+			meta.CommercialUsage = vrm1.MetaCommercialUsagePersonalNonProfit
 		default:
 			return meta, fmt.Errorf("can not migrate commercialUssageName(%s) from vrm 0.x", *meta0.CommercialUssageName)
 		}

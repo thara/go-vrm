@@ -1,4 +1,4 @@
-package vrm1x
+package vrm1
 
 import (
 	"encoding/json"
