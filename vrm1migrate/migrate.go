@@ -44,6 +44,13 @@ func Migrate(doc *gltf.Document) error {
 		ext1.Expressions = migrateExpression(doc, ext0, meshToNode)
 	}
 
+	if ext0.FirstPerson != nil {
+		ext1.LookAt, ext1.FirstPerson, err = migrateFirstPerson(doc, ext0)
+		if err != nil {
+			return fmt.Errorf("failed to migrate first person: %w", err)
+		}
+	}
+
 	//TODO springBone & collider (optional)
 
 	//TODO Material
