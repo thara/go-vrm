@@ -37,13 +37,17 @@ func migrateFirstPerson(doc *gltf.Document, ext0 *vrm0.VRMExtension) (*vrm1.Look
 	lookAt.RangeMapHorizontalOuter = migrateLookAtRangeMap(ext0.FirstPerson.LookAtHorizontalOuter, defaultX, defaultY)
 	lookAt.RangeMapVerticalDown = migrateLookAtRangeMap(ext0.FirstPerson.LookAtVerticalDown, defaultX, defaultY)
 	lookAt.RangeMapVerticalUp = migrateLookAtRangeMap(ext0.FirstPerson.LookAtVerticalUp, defaultX, defaultY)
-	lookAt.OffsetFromHeadBone, err = migrateVec(
-		ext0.FirstPerson.FirstPersonBoneOffset.X,
-		ext0.FirstPerson.FirstPersonBoneOffset.Y,
-		ext0.FirstPerson.FirstPersonBoneOffset.Z)
-	if err != nil {
+
+	if ext0.FirstPerson.FirstPersonBoneOffset.X == nil ||
+		ext0.FirstPerson.FirstPersonBoneOffset.Y == nil ||
+		ext0.FirstPerson.FirstPersonBoneOffset.Z == nil {
 		return nil, nil, fmt.Errorf("failed to migrate vrm0 firstPerson.firstPersonBoneOffset: %w", err)
 	}
+
+	lookAt.OffsetFromHeadBone = migrateVec(
+		*ext0.FirstPerson.FirstPersonBoneOffset.X,
+		*ext0.FirstPerson.FirstPersonBoneOffset.Y,
+		*ext0.FirstPerson.FirstPersonBoneOffset.Z)
 
 	var firstPerson vrm1.FirstPerson
 	for _, m := range ext0.FirstPerson.MeshAnnotations {

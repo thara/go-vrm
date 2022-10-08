@@ -51,7 +51,13 @@ func Migrate(doc *gltf.Document) error {
 		}
 	}
 
-	//TODO springBone & collider (optional)
+	if ext0.SecondaryAnimation != nil {
+		springBone, err := migrateSpringBone(doc, ext0)
+		if err != nil {
+			return fmt.Errorf("failed to migrate secondary animation: %w", err)
+		}
+		vrm1.AddSpringBoneExtension(doc, springBone)
+	}
 
 	//TODO Material
 
