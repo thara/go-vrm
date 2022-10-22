@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	extensionNameVRM        = "VRMC_vrm"
-	extensionNameSpringBone = "VRMC_springBone"
+	extensionNameVRM            = "VRMC_vrm"
+	extensionNameSpringBone     = "VRMC_springBone"
+	ExtensionNameMaterialsMToon = "VRMC_materials_mtoon"
 )
 
 func init() {
@@ -47,7 +48,7 @@ func unmarshalSpringBone(data []byte) (interface{}, error) {
 }
 
 func GetSpringBoneExtension(doc *gltf.Document) (*SpringBone, bool) {
-	ext, ok := doc.Extensions[extensionNameVRM]
+	ext, ok := doc.Extensions[extensionNameSpringBone]
 	if !ok {
 		return nil, false
 	}
@@ -61,4 +62,10 @@ func AddSpringBoneExtension(doc *gltf.Document, ext *SpringBone) {
 		doc.Extensions = gltf.Extensions{}
 	}
 	doc.Extensions[extensionNameSpringBone] = ext
+}
+
+func unmarshalMaterialsMToon(data []byte) (interface{}, error) {
+	var ext MaterialsMToon
+	err := json.Unmarshal(data, &ext)
+	return &ext, fmt.Errorf("failed to unmarshal json: %w", err)
 }

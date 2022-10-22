@@ -60,6 +60,7 @@ func Migrate(doc *gltf.Document) error {
 	}
 
 	//TODO Material
+	migrateMaterial(doc, ext0)
 
 	return nil
 }

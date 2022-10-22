@@ -7,4 +7,9 @@ require (
 	github.com/qmuntal/gltf v0.22.1
 )
 
-require golang.org/x/image v0.0.0-20190321063152-3fc05d484e9f // indirect
+require (
+	github.com/mandykoh/go-parallel v0.1.0 // indirect
+	github.com/mandykoh/prism v0.35.0 // indirect
+	golang.org/x/exp v0.0.0-20221019170559-20944726eadf // indirect
+	golang.org/x/image v0.0.0-20220902085622-e7cb96979f69 // indirect
+)
